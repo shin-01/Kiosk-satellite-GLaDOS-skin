@@ -41,9 +41,13 @@ public final class GladosSkinTest {
         assert GladosSkin.modeOf("responding") == GladosSkin.SPEAKING && GladosSkin.modeOf("processing") == GladosSkin.THINKING;
         assert GladosSkin.modeOf(null) == GladosSkin.IDLE;
 
+        // The iconic Portal lines rotate one per turn, starting with THE CAKE IS A LIE.
+        assert GladosSkin.QUOTES[0].equals("THE CAKE IS A LIE.");
+
         Host host = new Host();
         GladosSkin skin = new GladosSkin();
         skin.start(host);
+        assert skin.quote().equals("THE CAKE IS A LIE.");
         assert host.subscriptions.containsAll(Arrays.asList(GladosSkin.EVENTS));
         assert host.reads.containsKey("getVoiceState") && host.reads.containsKey("getVoiceText") && host.reads.containsKey("getVoiceAppearance");
 
@@ -51,6 +55,15 @@ public final class GladosSkinTest {
         host.reads.get("getVoiceState").onResult(true, map("enabled", true, "state", "idle", "skinSelected", false, "overlay", "hidden"), null);
         skin.onEvent("ks.voice.overlay", map("overlay", "full"));
         assert host.overlays.isEmpty() && skin.drawn() == null;
+
+        // The iconic Portal lines rotate one per turn, starting with THE CAKE IS A LIE.
+        skin.onEvent("ks.voice.skin", map("selected", true));
+        assert skin.quote().equals(GladosSkin.QUOTES[1]);
+        skin.onEvent("ks.voice.skin", map("selected", false));
+        assert skin.quote().equals(GladosSkin.QUOTES[1]);
+        skin.onEvent("ks.voice.skin", map("selected", true));
+        assert skin.quote().equals(GladosSkin.QUOTES[2]);
+        skin.onEvent("ks.voice.skin", map("selected", false));
 
         // Picked: full screen, on top, touches pass through.
         skin.onEvent("ks.voice.skin", map("selected", true));

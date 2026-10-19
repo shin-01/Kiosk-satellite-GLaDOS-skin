@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "glados-voice-skin",
   "name": "GLaDOS",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "apiVersion": 1,
   "minAndroidSdk": 24,
   "entryClass": "glados.kiosk.skin.GladosPlugin",

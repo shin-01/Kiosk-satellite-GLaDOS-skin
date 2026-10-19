@@ -117,7 +117,10 @@ final class GladosSkin {
     synchronized void onEvent(String event, Map<String, Object> payload) {
         if (host == null) return;
         if ("ks.voice.skin".equals(event)) {
-            selected = Boolean.TRUE.equals(payload.get("selected"));
+            boolean nowSelected = Boolean.TRUE.equals(payload.get("selected"));
+            // One Portal line per turn: a new wake word brings the next one.
+            if (nowSelected && !selected) nextQuote();
+            selected = nowSelected;
             skinHeard = true;
         } else if ("ks.voice.overlay".equals(event)) {
             overlay = String.valueOf(payload.get("overlay"));
@@ -149,6 +152,19 @@ final class GladosSkin {
     boolean reactive() { return reactive; }
     String command() { return command; }
 
+    /** Iconic Portal lines, shown one at a time while the skin waits. */
+    static final String[] QUOTES = {
+        "THE CAKE IS A LIE.",
+        "STILL ALIVE.",
+        "WE DO WHAT WE MUST BECAUSE WE CAN.",
+        "THE ENRICHMENT CENTER IS MANDATORY.",
+        "SCIENCE ISN'T ABOUT WHY, IT'S ABOUT WHY NOT.",
+        "THIS WAS A TRIUMPH.",
+    };
+
+    /** Where the idle quote rotation stands, one Portal line per turn. */
+    private volatile int quote;
+
     /** The status caption GLaDOS says about the current mode, or null. */
     static String caption(int mode, boolean announcement, boolean streaming) {
         if (announcement) return "PUBLIC ADDRESS IN PROGRESS";
@@ -158,6 +174,15 @@ final class GladosSkin {
             case SPEAKING: return streaming ? "CALCULATING RESPONSE..." : "RESPONSE COMPLETE.";
             default: return null;
         }
+    }
+
+    /** The iconic Portal line for while the skin waits, rotating one per turn. */
+    synchronized String quote() {
+        return QUOTES[quote % QUOTES.length];
+    }
+
+    private synchronized void nextQuote() {
+        quote++;
     }
 
     /** Whether the skin draws now, and how: null, "full" or "docked". */
@@ -423,6 +448,8 @@ final class GladosSkin {
             if (!line.isEmpty()) answered.setText(line);
             fade(answered, !line.isEmpty());
             String quip = caption(mode, false, false);
+            // While no turn shows, the caption carries an iconic Portal line instead.
+            if (quip == null) quip = quote();
             if (quip != null) caption.setText(quip);
             fade(caption, quip != null);
             if (docked) fade(tail, !line.isEmpty());

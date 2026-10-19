@@ -10,6 +10,7 @@ The skin draws the turn itself: the Aperture eye — a chrome ring, a dark lens 
 
 - **Full screen**: the eye and HUD fill the top half, the conversation the bottom.
 - **Docked**: a dark Aperture card at the bottom with a small eye beside the words.
+- Iconic Portal lines in English rotate while the skin waits: **THE CAKE IS A LIE.** · **STILL ALIVE.** · **WE DO WHAT WE MUST BECAUSE WE CAN.** · **THE ENRICHMENT CENTER IS MANDATORY.** · **SCIENCE ISN'T ABOUT WHY, IT'S ABOUT WHY NOT.** · **THIS WAS A TRIUMPH.**
 - Follows Voice Satellite's **Appearance** settings: Theme, Background, Text size and Reactive activity bar.
 - Six shutter blades tighten around the core while the assistant thinks.
 - With **Reactive activity bar** off, nothing moves with the voice; the eye only breathes.
