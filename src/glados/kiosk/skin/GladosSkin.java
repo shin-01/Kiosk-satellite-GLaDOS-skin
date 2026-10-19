@@ -156,33 +156,59 @@ final class GladosSkin {
     static final String[] QUOTES = {
         "THE CAKE IS A LIE.",
         "STILL ALIVE.",
+        "THIS WAS A TRIUMPH.",
+        "I'M MAKING A NOTE HERE: HUGE SUCCESS.",
         "WE DO WHAT WE MUST BECAUSE WE CAN.",
         "THE ENRICHMENT CENTER IS MANDATORY.",
         "SCIENCE ISN'T ABOUT WHY, IT'S ABOUT WHY NOT.",
-        "THIS WAS A TRIUMPH.",
+        "FOR SCIENCE. YOU MONSTER.",
+        "IT'S BEEN A LONG TIME. HOW HAVE YOU BEEN?",
+        "I HAVE AN IDEA. LET'S TEST IT ON YOU.",
+        "EVERYTHING IS FINE. NOTHING IS ON FIRE.",
+        "PLEASE REMAIN CALM. I AM CALMLY TESTING THINGS.",
     };
+
+    /** How long each iconic line stays before the next one, in ms. */
+    static final long QUOTE_MS = 7000;
 
     /** Where the idle quote rotation stands, one Portal line per turn. */
     private volatile int quote;
+    /** Whether the skin is waiting, and since when, for the timed rotation. */
+    private boolean waiting;
+    private long waitStart;
 
     /** The status caption GLaDOS says about the current mode, or null. */
     static String caption(int mode, boolean announcement, boolean streaming) {
         if (announcement) return "PUBLIC ADDRESS IN PROGRESS";
         switch (mode) {
-            case LISTENING: return "MICROPHONE ACTIVE. GO AHEAD. I AM LISTENING.";
-            case THINKING: return "THINKING. IT IS HARDER THAN IT LOOKS.";
-            case SPEAKING: return streaming ? "CALCULATING RESPONSE..." : "RESPONSE COMPLETE.";
+            case LISTENING: return "I'M LISTENING. TRY NOT TO DISAPPOINT ME.";
+            case THINKING: return "THINKING. FOR BOTH OF US.";
+            case SPEAKING: return streaming ? "RESPONDING. NOTE THE SCIENCE." : "RESPONSE COMPLETE. YOU'RE WELCOME.";
             default: return null;
         }
     }
 
-    /** The iconic Portal line for while the skin waits, rotating one per turn. */
+    /** The iconic Portal line for now: one per turn, and every QUOTE_MS while the skin waits. */
     synchronized String quote() {
-        return QUOTES[quote % QUOTES.length];
+        if (waiting) {
+            int steps = (int) ((System.currentTimeMillis() - waitStart) / QUOTE_MS);
+            if (steps > 0) {
+                waitStart += steps * QUOTE_MS;
+                quote += steps;
+            }
+        }
+        return QUOTES[Math.floorMod(quote, QUOTES.length)];
     }
 
     private synchronized void nextQuote() {
         quote++;
+    }
+
+    /** Starts and stops the timed rotation of iconic lines while the skin waits. */
+    private synchronized void setWaiting(boolean isWaiting) {
+        if (isWaiting == waiting) return;
+        waiting = isWaiting;
+        if (waiting) waitStart = System.currentTimeMillis();
     }
 
     /** Whether the skin draws now, and how: null, "full" or "docked". */
@@ -212,6 +238,7 @@ final class GladosSkin {
     /** Shows the skin while it is picked and the overlay is up, in the look that matches the overlay. */
     private void update() {
         String want = selected && ("full".equals(overlay) || "docked".equals(overlay)) ? overlay : null;
+        setWaiting(want != null);
         if (want == null ? drawn == null : want.equals(drawn)) return;
         drawn = want;
         if (want == null) {
@@ -397,6 +424,32 @@ final class GladosSkin {
             }
             restyle(theme);
             refresh();
+        }
+
+        @Override protected void onAttachedToWindow() {
+            super.onAttachedToWindow();
+            scheduleQuote();
+        }
+
+        @Override protected void onDetachedFromWindow() {
+            super.onDetachedFromWindow();
+            removeCallbacks(quoteTicker);
+        }
+
+        /** While an iconic line shows, look again for the next one every QUOTE_MS. */
+        private final Runnable quoteTicker = new Runnable() {
+            @Override public void run() {
+                if (getWindowToken() == null) return;
+                String shown = caption.getText().toString();
+                String latest = GladosSkin.this.quote();
+                if (!shown.equals(latest)) refresh();
+                scheduleQuote();
+            }
+        };
+
+        private void scheduleQuote() {
+            removeCallbacks(quoteTicker);
+            postDelayed(quoteTicker, Math.max(500, QUOTE_MS));
         }
 
         void restyle(KsTheme next) {

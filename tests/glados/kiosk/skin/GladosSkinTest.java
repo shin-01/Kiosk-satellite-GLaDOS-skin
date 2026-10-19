@@ -31,11 +31,11 @@ public final class GladosSkinTest {
     }
 
     public static void main(String[] args) {
-        // The captions match each mode, or stay silent when idle.
-        assert GladosSkin.caption(GladosSkin.LISTENING, false, false).equals("MICROPHONE ACTIVE. GO AHEAD. I AM LISTENING.");
-        assert GladosSkin.caption(GladosSkin.THINKING, false, false).equals("THINKING. IT IS HARDER THAN IT LOOKS.");
-        assert GladosSkin.caption(GladosSkin.SPEAKING, false, true).equals("CALCULATING RESPONSE...");
-        assert GladosSkin.caption(GladosSkin.SPEAKING, false, false).equals("RESPONSE COMPLETE.");
+        // The captions match each mode, GLaDOS-flavored, or stay silent when idle.
+        assert GladosSkin.caption(GladosSkin.LISTENING, false, false).equals("I'M LISTENING. TRY NOT TO DISAPPOINT ME.");
+        assert GladosSkin.caption(GladosSkin.THINKING, false, false).equals("THINKING. FOR BOTH OF US.");
+        assert GladosSkin.caption(GladosSkin.SPEAKING, false, true).equals("RESPONDING. NOTE THE SCIENCE.");
+        assert GladosSkin.caption(GladosSkin.SPEAKING, false, false).equals("RESPONSE COMPLETE. YOU'RE WELCOME.");
         assert GladosSkin.caption(GladosSkin.IDLE, false, false) == null;
         assert GladosSkin.caption(GladosSkin.LISTENING, true, false).equals("PUBLIC ADDRESS IN PROGRESS");
         assert GladosSkin.modeOf("responding") == GladosSkin.SPEAKING && GladosSkin.modeOf("processing") == GladosSkin.THINKING;
@@ -57,6 +57,7 @@ public final class GladosSkinTest {
         assert host.overlays.isEmpty() && skin.drawn() == null;
 
         // The iconic Portal lines rotate one per turn, starting with THE CAKE IS A LIE.
+        assert GladosSkin.QUOTES.length >= 12;
         skin.onEvent("ks.voice.skin", map("selected", true));
         assert skin.quote().equals(GladosSkin.QUOTES[1]);
         skin.onEvent("ks.voice.skin", map("selected", false));
