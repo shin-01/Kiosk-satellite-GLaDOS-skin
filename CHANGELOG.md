@@ -16,3 +16,8 @@ Initial release.
 
 - Twelve iconic Portal lines in rotation, one every 7 seconds while the skin waits, plus one per turn.
 - More GLaDOS-like status captions: "I'M LISTENING. TRY NOT TO DISAPPOINT ME.", "THINKING. FOR BOTH OF US.", "RESPONDING. NOTE THE SCIENCE.", "RESPONSE COMPLETE. YOU'RE WELCOME."
+
+## 0.4.0
+
+- GLaDOS in potato form, from Portal's second act: lumpy brown potato body with baked spots, the Aperture eye jammed in with a metal bolted ring, a glowing yellow lens with a red pupil, and clipped wires swaying from the back.
+- Simpler shapes than the full eye, cheaper to render on weak kiosks.

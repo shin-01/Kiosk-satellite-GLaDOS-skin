@@ -55,7 +55,7 @@ final class GladosHud extends View {
         }
 
         // Aperture bracket corners, eased outward with the voice.
-        float inset = side * (0.035f + 0.012f * pulse);
+        float inset = side * (0.035f + 0.012f * pulse) + 4f;
         float thickness = side * BRACKET;
         float arm = side * ARM;
         line.setStrokeWidth(thickness);
