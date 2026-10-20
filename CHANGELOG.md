@@ -21,3 +21,8 @@ Initial release.
 
 - GLaDOS in potato form, from Portal's second act: lumpy brown potato body with baked spots, the Aperture eye jammed in with a metal bolted ring, a glowing yellow lens with a red pupil, and clipped wires swaying from the back.
 - Simpler shapes than the full eye, cheaper to render on weak kiosks.
+
+## 0.5.0
+
+- The potato is now a static photorealistic picture shipped in the plugin's assets; only the eye's light animates over it: the glow that flares with the voice and the answer, and the breathing red pupil.
+- Lighter still: one bitmap draw plus a few circles per frame.

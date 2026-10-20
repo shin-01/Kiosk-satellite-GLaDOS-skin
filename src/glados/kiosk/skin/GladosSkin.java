@@ -283,6 +283,7 @@ final class GladosSkin {
         @Override public View create(Context context, KsTheme theme) {
             SkinView skin = new SkinView(context, theme, docked);
             view = skin;
+            if (host != null) skin.loadPicture();
             return skin;
         }
         @Override public void onThemeChanged(View changed, KsTheme theme) {
@@ -336,6 +337,11 @@ final class GladosSkin {
         private final boolean docked;
         private final GladosEye eye;
         private final GladosHud hud;
+
+        /** Loads the static potato picture from the plugin's assets. */
+        void loadPicture() {
+            eye.loadPicture(host);
+        }
         private final TextView said;
         private final TextView answered;
         private final TextView caption;

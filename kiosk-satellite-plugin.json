@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "id": "glados-voice-skin",
   "name": "GLaDOS",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "apiVersion": 1,
   "minAndroidSdk": 24,
   "entryClass": "glados.kiosk.skin.GladosPlugin",
-  "description": "GLaDOS as a potato, a Voice Satellite skin. The Aperture eye jammed into a potato, wires and all, flaring with your voice and the answer, with GLaDOS-flavored captions.",
+  "description": "GLaDOS as a potato, a Voice Satellite skin. A photorealistic potato with the Aperture eye jammed in, whose light flares with your voice and the answer, with GLaDOS-flavored captions.",
   "author": "Vibe",
   "license": "MIT",
   "capabilities": [
