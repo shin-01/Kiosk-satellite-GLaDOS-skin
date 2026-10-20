@@ -12,11 +12,19 @@ public final class GladosSkinTest {
         final Set<String> subscriptions = new HashSet<>();
         final Map<String, CommandCallback> reads = new HashMap<>();
         final Map<String, OverlaySpec> overlays = new HashMap<>();
+        final Map<String, Map<String, Object>> screensavers = new HashMap<>();
+        final Map<String, Map<String, Object>> screensaverOptions = new HashMap<>();
         boolean older;
         public void executeCommand(String command, Map<String, Object> arguments, CommandCallback callback) { reads.put(command, callback); }
         public void subscribe(String event) { if (older) throw new IllegalArgumentException("Unknown KS event"); subscriptions.add(event); }
         public void showOverlay(String key, OverlaySpec spec, OverlayFactory factory) { assert key.matches("[a-z][a-z0-9_]{0,39}") : key; overlays.put(key, spec); }
         public void hideOverlay(String key) { overlays.remove(key); }
+        public void publishScreensaverAsset(String key, String title, String entry, Map<String, Object> data) {
+            assert key.matches("[a-z][a-z0-9_]{0,39}") : key;
+            screensavers.put(key, new HashMap<>(data));
+            screensaverOptions.put(key, new HashMap<>(data));
+        }
+        public void removeScreensaver(String key) { screensavers.remove(key); screensaverOptions.remove(key); }
         public java.io.InputStream openAsset(String name) throws java.io.IOException { throw new java.io.IOException("no assets in tests"); }
         public void showWindow(String title, String message, String button) {}
         public void hideWindow() {}
@@ -104,12 +112,15 @@ public final class GladosSkinTest {
         older.start(old);
         assert old.subscriptions.isEmpty() && older.drawn() == null;
 
-        // The plugin wires the skin to the host.
+        // The plugin wires the skin to the host, and publishes its screensaver.
         GladosPlugin plugin = new GladosPlugin();
         plugin.start(host, Collections.emptyMap());
         plugin.onEvent("ks.voice.skin", map("selected", true));
         plugin.onEvent("ks.voice.overlay", map("overlay", "docked"));
         assert host.overlays.containsKey(GladosSkin.KEY);
+        assert host.screensavers.containsKey(GladosPlugin.SCREENSAVER_KEY);
+        plugin.configure(Collections.singletonMap("screensaverQuotes", Boolean.FALSE));
+        assert Boolean.FALSE.equals(host.screensaverOptions.get(GladosPlugin.SCREENSAVER_KEY).get("quotes"));
         plugin.stop();
         assert host.overlays.isEmpty();
 

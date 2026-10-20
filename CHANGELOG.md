@@ -26,3 +26,8 @@ Initial release.
 
 - The potato is now a static photorealistic picture shipped in the plugin's assets; only the eye's light animates over it: the glow that flares with the voice and the answer, and the breathing red pupil.
 - Lighter still: one bitmap draw plus a few circles per frame.
+
+## 0.6.0
+
+- New GLaDOS screensaver, registered as a plugin screensaver mode: the same static photorealistic potato with its breathing eye and the iconic Portal lines rotating under it, rendered in the stock screensaver's WebView. Pick it in Screensaver > Screensaver mode or in a schedule.
+- New setting: Show Portal quotes in the screensaver.

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GLaDOS</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0c0e10; overflow: hidden;
+    font-family: "Segoe UI", "Roboto", sans-serif; }
+  #stage { position: fixed; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; }
+  #scene { position: relative; width: min(52vmin, 90vw); aspect-ratio: 1; }
+  #scene img { position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: contain; }
+  /* The eye's light lands on the picture's own lens, at 60%/43%. */
+  #eye { position: absolute; left: 60%; top: 43%; width: 0; height: 0; }
+  #glow { position: absolute; border-radius: 50%; transform: translate(-50%, -50%);
+    mix-blend-mode: screen; }
+  #core { position: absolute; border-radius: 50%; transform: translate(-50%, -50%);
+    background: radial-gradient(circle, #ffd166 0%, #ffc141 60%, rgba(255,193,65,0) 100%); }
+  #pupil { position: absolute; border-radius: 50%; transform: translate(-50%, -50%);
+    background: radial-gradient(circle, #e23b2e 0%, rgba(226,59,46,0) 100%); }
+  #quote { color: #6e93a3; font-size: 2.2vmin; letter-spacing: 0.18em; text-align: center;
+    margin-top: 4vmin; padding: 0 6vw; opacity: 0; transition: opacity 1.2s ease;
+    text-transform: uppercase; }
+  #brackets { position: fixed; inset: 3vmin; pointer-events: none; opacity: 0.6; }
+</style>
+</head>
+<body>
+<div id="brackets">
+  <svg width="100%" height="100%" preserveAspectRatio="none">
+    <g stroke="#9bb7c4" stroke-width="0.35vmin" fill="none">
+      <path d="M 0 2.4vmin L 0 0 L 2.4vmin 0" />
+    </g>
+  </svg>
+</div>
+<div id="stage">
+  <div id="scene">
+    <img src="../potato.png" alt="">
+    <div id="eye"></div>
+  </div>
+  <div id="quote"></div>
+</div>
+<script src="glados.js"></script>
+</body>
+</html>

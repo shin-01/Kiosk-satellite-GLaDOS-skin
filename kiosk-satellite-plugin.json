@@ -2,19 +2,30 @@
   "schemaVersion": 1,
   "id": "glados-voice-skin",
   "name": "GLaDOS",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "apiVersion": 1,
   "minAndroidSdk": 24,
   "entryClass": "glados.kiosk.skin.GladosPlugin",
-  "description": "GLaDOS as a potato, a Voice Satellite skin. A photorealistic potato with the Aperture eye jammed in, whose light flares with your voice and the answer, with GLaDOS-flavored captions.",
+  "description": "GLaDOS as a potato, a Voice Satellite skin and screensaver. A photorealistic potato with the Aperture eye jammed in, whose light flares with your voice and the answer, with GLaDOS-flavored captions.",
   "author": "Vibe",
   "license": "MIT",
   "capabilities": [
     "overlay",
     "host.read",
     "voice.skin",
-    "voice.text"
+    "voice.text",
+    "screensaver"
   ],
   "voiceSkinThumbnail": "voice-skin.webp",
-  "icon": "glados_icon.png"
+  "icon": "glados_icon.png",
+  "settings": [
+    {
+      "key": "screensaverQuotes",
+      "type": "boolean",
+      "title": "Show Portal quotes in the screensaver",
+      "default": true,
+      "group": "Screensaver",
+      "description": "Rotate the iconic Portal lines under the potato while the screensaver runs."
+    }
+  ]
 }

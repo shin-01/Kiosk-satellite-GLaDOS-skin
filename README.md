@@ -4,7 +4,7 @@
   <img src="assets/voice-skin.webp" alt="GLaDOS voice skin" width="640" />
 </p>
 
-GLaDOS, the Aperture Science AI, now runs your smart home. A [Kiosk Satellite](https://github.com/jxlarrea/kiosk-satellite) plugin that adds the **GLaDOS** skin to Voice Satellite.
+GLaDOS, the Aperture Science AI, now runs your smart home. A [Kiosk Satellite](https://github.com/jxlarrea/kiosk-satellite) plugin that adds the **GLaDOS** skin to Voice Satellite and a **GLaDOS** screensaver to the screensaver mode picker.
 
 The skin draws the turn itself: the Aperture eye — a chrome ring, a dark lens and a glowing core that flares with your voice and the answer — inside a HUD of bracket corners, drifting scan lines and orbiting tick marks, with the conversation below and a GLaDOS-flavored status caption (`THINKING. IT IS HARDER THAN IT LOOKS.`).
 
@@ -27,6 +27,10 @@ If listed in [Community Plugins](https://kiosksatellite.com/plugins/), search fo
 1. Open **Settings > Plugin Manager** in Kiosk Satellite and turn on **Enable Plugins**.
 2. Choose **Add plugin**, paste this repository's GitHub URL and choose **Preview**.
 3. Review the plugin and choose **Trust and install**.
+
+## Screensaver
+
+The plugin also registers a **GLaDOS** screensaver: the same photorealistic potato with its breathing eye, and the iconic Portal lines rotating under it. Pick **GLaDOS (GLaDOS)** in **Screensaver > Screensaver mode**, or in any screensaver schedule. The **Show Portal quotes in the screensaver** setting on the plugin's page turns the lines off.
 
 ## Configuration
 
